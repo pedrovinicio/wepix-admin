@@ -15,7 +15,10 @@ const pt = {
     totalGroups: 'Total de Grupos',
     totalExpenses: 'Total de Despesas',
     totalFeedback: 'Total de Feedback',
-    userGrowth: 'Crescimento de Usuários',
+    userGrowth: 'Novos Cadastros',
+    totalUsersOverTime: 'Total de Usuários & Usuários Ativos',
+    totalUsersLine: 'Total de Usuários',
+    activeUsersLine: 'Usuários Ativos',
     recentUsers: 'Usuários Recentes',
     period: {
       daily: 'Diário',

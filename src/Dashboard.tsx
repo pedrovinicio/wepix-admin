@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, Box, Typography, Select, MenuItem, Table, TableBody, TableCell, TableHead, TableRow, Grid } from '@mui/material';
 import { useDataProvider } from 'react-admin';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import PeopleIcon from '@mui/icons-material/People';
 import GroupIcon from '@mui/icons-material/Group';
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -22,6 +22,12 @@ interface Overview {
 interface GrowthPoint {
   period: string;
   count: number;
+}
+
+interface CumulativePoint {
+  period: string;
+  total: number;
+  active: number;
 }
 
 interface RecentUser {
@@ -52,7 +58,9 @@ const Dashboard = () => {
   const dataProvider = useDataProvider();
   const [overview, setOverview] = useState<Overview | null>(null);
   const [growth, setGrowth] = useState<GrowthPoint[]>([]);
+  const [cumulative, setCumulative] = useState<CumulativePoint[]>([]);
   const [period, setPeriod] = useState<string>('daily');
+  const [cumulativePeriod, setCumulativePeriod] = useState<string>('daily');
   const [recentUsers, setRecentUsers] = useState<RecentUser[]>([]);
 
   const fetchWithAuth = async (url: string) => {
@@ -82,6 +90,12 @@ const Dashboard = () => {
       if (res.success) setGrowth(res.data);
     });
   }, [period]);
+
+  useEffect(() => {
+    fetchWithAuth(`${API_URL}/admin/stats/users/cumulative?period=${cumulativePeriod}`).then((res) => {
+      if (res.success) setCumulative(res.data);
+    });
+  }, [cumulativePeriod]);
 
   if (!overview) return null;
 
@@ -123,6 +137,32 @@ const Dashboard = () => {
               <YAxis allowDecimals={false} />
               <Tooltip />
               <Line type="monotone" dataKey="count" stroke="#4caf50" strokeWidth={2} dot={{ r: 4 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+
+      <Card sx={{ mb: 3 }}>
+        <CardHeader
+          title={t.dashboard.totalUsersOverTime}
+          action={
+            <Select value={cumulativePeriod} onChange={(e) => setCumulativePeriod(e.target.value)} size="small">
+              <MenuItem value="daily">{t.dashboard.period.daily}</MenuItem>
+              <MenuItem value="weekly">{t.dashboard.period.weekly}</MenuItem>
+              <MenuItem value="monthly">{t.dashboard.period.monthly}</MenuItem>
+            </Select>
+          }
+        />
+        <CardContent>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={cumulative}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="period" />
+              <YAxis allowDecimals={false} />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="total" name={t.dashboard.totalUsersLine} stroke="#2196f3" strokeWidth={2} dot={{ r: 4 }} />
+              <Line type="monotone" dataKey="active" name={t.dashboard.activeUsersLine} stroke="#4caf50" strokeWidth={2} dot={{ r: 4 }} />
             </LineChart>
           </ResponsiveContainer>
         </CardContent>

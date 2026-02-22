@@ -15,7 +15,10 @@ const en = {
     totalGroups: 'Total Groups',
     totalExpenses: 'Total Expenses',
     totalFeedback: 'Total Feedback',
-    userGrowth: 'User Growth',
+    userGrowth: 'New Registrations',
+    totalUsersOverTime: 'Total Users & Active Users',
+    totalUsersLine: 'Total Users',
+    activeUsersLine: 'Active Users',
     recentUsers: 'Recent Users',
     period: {
       daily: 'Daily',
