@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, Box, Typography, Select, MenuItem, Table
 import { useDataProvider } from 'react-admin';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import PeopleIcon from '@mui/icons-material/People';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import GroupIcon from '@mui/icons-material/Group';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import FeedbackIcon from '@mui/icons-material/Feedback';
@@ -14,6 +15,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 interface Overview {
   totalUsers: number;
+  activeUsers: number;
   totalGroups: number;
   totalExpenses: number;
   totalFeedback: number;
@@ -104,16 +106,19 @@ const Dashboard = () => {
       <Typography variant="h5" sx={{ mb: 3, fontWeight: 'bold' }}>{t.dashboard.title}</Typography>
 
       <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
           <StatCard title={t.dashboard.totalUsers} value={overview.totalUsers} icon={<PeopleIcon sx={{ color: '#fff' }} />} color="#4caf50" />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
+          <StatCard title={t.dashboard.activeUsers} value={overview.activeUsers} icon={<VerifiedUserIcon sx={{ color: '#fff' }} />} color="#10B981" />
+        </Grid>
+        <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
           <StatCard title={t.dashboard.totalGroups} value={overview.totalGroups} icon={<GroupIcon sx={{ color: '#fff' }} />} color="#2196f3" />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
           <StatCard title={t.dashboard.totalExpenses} value={overview.totalExpenses} icon={<ReceiptIcon sx={{ color: '#fff' }} />} color="#ff9800" />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
           <StatCard title={t.dashboard.totalFeedback} value={overview.totalFeedback} icon={<FeedbackIcon sx={{ color: '#fff' }} />} color="#9c27b0" />
         </Grid>
       </Grid>

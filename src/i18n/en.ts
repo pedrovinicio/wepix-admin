@@ -12,6 +12,7 @@ const en = {
   dashboard: {
     title: 'Dashboard',
     totalUsers: 'Total Users',
+    activeUsers: 'Active Users',
     totalGroups: 'Total Groups',
     totalExpenses: 'Total Expenses',
     totalFeedback: 'Total Feedback',

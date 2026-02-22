@@ -12,6 +12,7 @@ const pt = {
   dashboard: {
     title: 'Painel',
     totalUsers: 'Total de Usuários',
+    activeUsers: 'Usuários Ativos',
     totalGroups: 'Total de Grupos',
     totalExpenses: 'Total de Despesas',
     totalFeedback: 'Total de Feedback',
