@@ -9,6 +9,23 @@ const LoginPage = () => (
       backgroundColor: '#0F172A',
       '& .RaLogin-card': {
         backgroundColor: '#FAFBFC',
+        '& .MuiInputBase-input': {
+          color: '#0F172A',
+        },
+        '& .MuiInputLabel-root': {
+          color: '#64748B',
+        },
+        '& .MuiInputLabel-root.Mui-focused': {
+          color: '#3A9FDB',
+        },
+        '& .MuiOutlinedInput-root': {
+          '& fieldset': {
+            borderColor: '#CBD5E1',
+          },
+          '&:hover fieldset': {
+            borderColor: '#3A9FDB',
+          },
+        },
       },
     }}
   >

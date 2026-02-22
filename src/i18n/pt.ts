@@ -48,6 +48,7 @@ const pt = {
         messagesCount: 'Mensagens',
         expensesTotal: 'Total de Despesas',
       },
+      summary: '%{count} participantes',
     },
   },
 };

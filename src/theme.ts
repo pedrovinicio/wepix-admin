@@ -17,4 +17,23 @@ export const theme = {
       contrastText: '#FFFFFF',
     },
   },
+  components: {
+    ...defaultDarkTheme.components,
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          whiteSpace: 'nowrap' as const,
+        },
+      },
+    },
+    RaList: {
+      styleOverrides: {
+        root: {
+          '& .RaList-content': {
+            overflowX: 'auto' as const,
+          },
+        },
+      },
+    },
+  },
 };

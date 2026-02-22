@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, Box, Typography, Select, MenuItem, Table, TableBody, TableCell, TableHead, TableRow, Grid } from '@mui/material';
+import { Card, CardContent, CardHeader, Box, Typography, Select, MenuItem, Table, TableBody, TableCell, TableHead, TableRow, Grid, useMediaQuery, useTheme } from '@mui/material';
 import { useDataProvider } from 'react-admin';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import PeopleIcon from '@mui/icons-material/People';
@@ -41,14 +41,14 @@ interface RecentUser {
 }
 
 const StatCard = ({ title, value, icon, color }: { title: string; value: number; icon: React.ReactNode; color: string }) => (
-  <Card sx={{ flex: 1, minWidth: 200 }}>
-    <CardContent>
+  <Card sx={{ flex: 1 }}>
+    <CardContent sx={{ p: { xs: 1.5, sm: 2 }, '&:last-child': { pb: { xs: 1.5, sm: 2 } } }}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Box>
-          <Typography variant="body2" color="text.secondary">{title}</Typography>
-          <Typography variant="h4" sx={{ fontWeight: 'bold', mt: 1 }}>{value.toLocaleString()}</Typography>
+        <Box sx={{ minWidth: 0 }}>
+          <Typography variant="body2" color="text.secondary" noWrap>{title}</Typography>
+          <Typography variant="h5" sx={{ fontWeight: 'bold', mt: 0.5, fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>{value.toLocaleString()}</Typography>
         </Box>
-        <Box sx={{ backgroundColor: color, borderRadius: 2, p: 1.5, display: 'flex' }}>
+        <Box sx={{ backgroundColor: color, borderRadius: 2, p: { xs: 1, sm: 1.5 }, display: 'flex', flexShrink: 0, ml: 1 }}>
           {icon}
         </Box>
       </Box>
@@ -99,31 +99,34 @@ const Dashboard = () => {
     });
   }, [cumulativePeriod]);
 
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
+
   if (!overview) return null;
 
   return (
-    <Box sx={{ p: 2 }}>
-      <Typography variant="h5" sx={{ mb: 3, fontWeight: 'bold' }}>{t.dashboard.title}</Typography>
+    <Box sx={{ p: { xs: 1, sm: 2 } }}>
+      <Typography variant="h5" sx={{ mb: { xs: 2, sm: 3 }, fontWeight: 'bold', fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>{t.dashboard.title}</Typography>
 
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
-          <StatCard title={t.dashboard.totalUsers} value={overview.totalUsers} icon={<PeopleIcon sx={{ color: '#fff' }} />} color="#4caf50" />
+      <Grid container spacing={{ xs: 1, sm: 2 }} sx={{ mb: { xs: 2, sm: 3 } }}>
+        <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
+          <StatCard title={t.dashboard.totalUsers} value={overview.totalUsers} icon={<PeopleIcon sx={{ color: '#fff', fontSize: { xs: 20, sm: 24 } }} />} color="#4caf50" />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
-          <StatCard title={t.dashboard.activeUsers} value={overview.activeUsers} icon={<VerifiedUserIcon sx={{ color: '#fff' }} />} color="#10B981" />
+        <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
+          <StatCard title={t.dashboard.activeUsers} value={overview.activeUsers} icon={<VerifiedUserIcon sx={{ color: '#fff', fontSize: { xs: 20, sm: 24 } }} />} color="#10B981" />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
-          <StatCard title={t.dashboard.totalGroups} value={overview.totalGroups} icon={<GroupIcon sx={{ color: '#fff' }} />} color="#2196f3" />
+        <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
+          <StatCard title={t.dashboard.totalGroups} value={overview.totalGroups} icon={<GroupIcon sx={{ color: '#fff', fontSize: { xs: 20, sm: 24 } }} />} color="#2196f3" />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
-          <StatCard title={t.dashboard.totalExpenses} value={overview.totalExpenses} icon={<ReceiptIcon sx={{ color: '#fff' }} />} color="#ff9800" />
+        <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
+          <StatCard title={t.dashboard.totalExpenses} value={overview.totalExpenses} icon={<ReceiptIcon sx={{ color: '#fff', fontSize: { xs: 20, sm: 24 } }} />} color="#ff9800" />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6, md: 2.4 }}>
-          <StatCard title={t.dashboard.totalFeedback} value={overview.totalFeedback} icon={<FeedbackIcon sx={{ color: '#fff' }} />} color="#9c27b0" />
+        <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
+          <StatCard title={t.dashboard.totalFeedback} value={overview.totalFeedback} icon={<FeedbackIcon sx={{ color: '#fff', fontSize: { xs: 20, sm: 24 } }} />} color="#9c27b0" />
         </Grid>
       </Grid>
 
-      <Card sx={{ mb: 3 }}>
+      <Card sx={{ mb: { xs: 2, sm: 3 } }}>
         <CardHeader
           title={t.dashboard.userGrowth}
           action={
@@ -133,21 +136,26 @@ const Dashboard = () => {
               <MenuItem value="monthly">{t.dashboard.period.monthly}</MenuItem>
             </Select>
           }
+          sx={{
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: { xs: 'flex-start', sm: 'center' },
+            '& .MuiCardHeader-action': { mt: { xs: 1, sm: 0 }, alignSelf: { xs: 'flex-end', sm: 'auto' } },
+          }}
         />
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={growth}>
+        <CardContent sx={{ px: { xs: 1, sm: 2 } }}>
+          <ResponsiveContainer width="100%" height={isSmall ? 220 : 300}>
+            <LineChart data={growth} margin={isSmall ? { left: -15, right: 5 } : undefined}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="period" />
-              <YAxis allowDecimals={false} />
+              <XAxis dataKey="period" tick={{ fontSize: isSmall ? 10 : 12 }} />
+              <YAxis allowDecimals={false} tick={{ fontSize: isSmall ? 10 : 12 }} />
               <Tooltip />
-              <Line type="monotone" dataKey="count" stroke="#4caf50" strokeWidth={2} dot={{ r: 4 }} />
+              <Line type="monotone" dataKey="count" stroke="#4caf50" strokeWidth={2} dot={{ r: isSmall ? 2 : 4 }} />
             </LineChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
-      <Card sx={{ mb: 3 }}>
+      <Card sx={{ mb: { xs: 2, sm: 3 } }}>
         <CardHeader
           title={t.dashboard.totalUsersOverTime}
           action={
@@ -157,17 +165,22 @@ const Dashboard = () => {
               <MenuItem value="monthly">{t.dashboard.period.monthly}</MenuItem>
             </Select>
           }
+          sx={{
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: { xs: 'flex-start', sm: 'center' },
+            '& .MuiCardHeader-action': { mt: { xs: 1, sm: 0 }, alignSelf: { xs: 'flex-end', sm: 'auto' } },
+          }}
         />
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={cumulative}>
+        <CardContent sx={{ px: { xs: 1, sm: 2 } }}>
+          <ResponsiveContainer width="100%" height={isSmall ? 220 : 300}>
+            <LineChart data={cumulative} margin={isSmall ? { left: -15, right: 5 } : undefined}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="period" />
-              <YAxis allowDecimals={false} />
+              <XAxis dataKey="period" tick={{ fontSize: isSmall ? 10 : 12 }} />
+              <YAxis allowDecimals={false} tick={{ fontSize: isSmall ? 10 : 12 }} />
               <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="total" name={t.dashboard.totalUsersLine} stroke="#2196f3" strokeWidth={2} dot={{ r: 4 }} />
-              <Line type="monotone" dataKey="active" name={t.dashboard.activeUsersLine} stroke="#4caf50" strokeWidth={2} dot={{ r: 4 }} />
+              <Legend wrapperStyle={isSmall ? { fontSize: 11 } : undefined} />
+              <Line type="monotone" dataKey="total" name={t.dashboard.totalUsersLine} stroke="#2196f3" strokeWidth={2} dot={{ r: isSmall ? 2 : 4 }} />
+              <Line type="monotone" dataKey="active" name={t.dashboard.activeUsersLine} stroke="#4caf50" strokeWidth={2} dot={{ r: isSmall ? 2 : 4 }} />
             </LineChart>
           </ResponsiveContainer>
         </CardContent>
@@ -175,8 +188,8 @@ const Dashboard = () => {
 
       <Card>
         <CardHeader title={t.dashboard.recentUsers} />
-        <CardContent>
-          <Table size="small">
+        <CardContent sx={{ px: { xs: 0, sm: 2 }, overflowX: 'auto' }}>
+          <Table size="small" sx={{ minWidth: { xs: 500, sm: 'auto' } }}>
             <TableHead>
               <TableRow>
                 <TableCell align="left">{t.resources.users.fields.name}</TableCell>
