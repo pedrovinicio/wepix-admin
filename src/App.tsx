@@ -5,6 +5,7 @@ import authProvider from './authProvider';
 import dataProvider from './dataProvider';
 import { i18nProvider } from './i18n';
 import Dashboard from './Dashboard';
+import LoginPage from './LoginPage';
 import { UserList } from './resources/users';
 import { GroupList } from './resources/groups';
 
@@ -14,6 +15,7 @@ const App = () => (
     dataProvider={dataProvider}
     i18nProvider={i18nProvider}
     dashboard={Dashboard}
+    loginPage={LoginPage}
     basename="/"
   >
     <Resource name="users" list={UserList} icon={PeopleIcon} />
