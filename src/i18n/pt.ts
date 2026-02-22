@@ -41,7 +41,7 @@ const pt = {
       name: 'Grupo |||| Grupos',
       fields: {
         name: 'Nome',
-        description: 'Descrição',
+        createdBy: 'Criador',
         createdAt: 'Criado',
         participantsCount: 'Participantes',
         messagesCount: 'Mensagens',

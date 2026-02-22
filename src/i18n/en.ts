@@ -41,7 +41,7 @@ const en = {
       name: 'Group |||| Groups',
       fields: {
         name: 'Name',
-        description: 'Description',
+        createdBy: 'Creator',
         createdAt: 'Created',
         participantsCount: 'Participants',
         messagesCount: 'Messages',
