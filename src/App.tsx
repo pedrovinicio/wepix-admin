@@ -6,6 +6,7 @@ import dataProvider from './dataProvider';
 import { i18nProvider } from './i18n';
 import Dashboard from './Dashboard';
 import LoginPage from './LoginPage';
+import { theme } from './theme';
 import { UserList } from './resources/users';
 import { GroupList } from './resources/groups';
 
@@ -16,6 +17,7 @@ const App = () => (
     i18nProvider={i18nProvider}
     dashboard={Dashboard}
     loginPage={LoginPage}
+    theme={theme}
     basename="/"
   >
     <Resource name="users" list={UserList} icon={PeopleIcon} />

@@ -2,7 +2,16 @@ import { Login, LoginForm } from 'react-admin';
 import { Box } from '@mui/material';
 
 const LoginPage = () => (
-  <Login sx={{ '& .RaLogin-icon': { display: 'none' } }}>
+  <Login
+    sx={{
+      '& .RaLogin-icon': { display: 'none' },
+      backgroundImage: 'none',
+      backgroundColor: '#0F172A',
+      '& .RaLogin-card': {
+        backgroundColor: '#FAFBFC',
+      },
+    }}
+  >
     <Box sx={{ display: 'flex', justifyContent: 'center', pt: 2 }}>
       <img src="/logo.png" alt="WePix" style={{ width: 200, height: 'auto' }} />
     </Box>
