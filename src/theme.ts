@@ -22,7 +22,9 @@ export const theme = {
     MuiTableCell: {
       styleOverrides: {
         root: {
-          whiteSpace: 'nowrap' as const,
+          '@media (min-width: 600px)': {
+            whiteSpace: 'nowrap' as const,
+          },
         },
       },
     },

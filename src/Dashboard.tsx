@@ -42,13 +42,13 @@ interface RecentUser {
 
 const StatCard = ({ title, value, icon, color }: { title: string; value: number; icon: React.ReactNode; color: string }) => (
   <Card sx={{ flex: 1 }}>
-    <CardContent sx={{ p: { xs: 1.5, sm: 2 }, '&:last-child': { pb: { xs: 1.5, sm: 2 } } }}>
+    <CardContent sx={{ p: { xs: 1, sm: 2 }, '&:last-child': { pb: { xs: 1, sm: 2 } } }}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Box sx={{ minWidth: 0 }}>
-          <Typography variant="body2" color="text.secondary" noWrap>{title}</Typography>
-          <Typography variant="h5" sx={{ fontWeight: 'bold', mt: 0.5, fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>{value.toLocaleString()}</Typography>
+          <Typography variant="caption" color="text.secondary" noWrap sx={{ fontSize: { xs: '0.65rem', sm: '0.75rem' } }}>{title}</Typography>
+          <Typography sx={{ fontWeight: 'bold', mt: 0.25, fontSize: { xs: '1rem', sm: '1.5rem' } }}>{value.toLocaleString()}</Typography>
         </Box>
-        <Box sx={{ backgroundColor: color, borderRadius: 2, p: { xs: 1, sm: 1.5 }, display: 'flex', flexShrink: 0, ml: 1 }}>
+        <Box sx={{ backgroundColor: color, borderRadius: { xs: 1.5, sm: 2 }, p: { xs: 0.75, sm: 1.5 }, display: 'flex', flexShrink: 0, ml: 0.5 }}>
           {icon}
         </Box>
       </Box>
@@ -110,19 +110,19 @@ const Dashboard = () => {
 
       <Grid container spacing={{ xs: 1, sm: 2 }} sx={{ mb: { xs: 2, sm: 3 } }}>
         <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
-          <StatCard title={t.dashboard.totalUsers} value={overview.totalUsers} icon={<PeopleIcon sx={{ color: '#fff', fontSize: { xs: 20, sm: 24 } }} />} color="#4caf50" />
+          <StatCard title={t.dashboard.totalUsers} value={overview.totalUsers} icon={<PeopleIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#4caf50" />
         </Grid>
         <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
-          <StatCard title={t.dashboard.activeUsers} value={overview.activeUsers} icon={<VerifiedUserIcon sx={{ color: '#fff', fontSize: { xs: 20, sm: 24 } }} />} color="#10B981" />
+          <StatCard title={t.dashboard.activeUsers} value={overview.activeUsers} icon={<VerifiedUserIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#10B981" />
         </Grid>
         <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
-          <StatCard title={t.dashboard.totalGroups} value={overview.totalGroups} icon={<GroupIcon sx={{ color: '#fff', fontSize: { xs: 20, sm: 24 } }} />} color="#2196f3" />
+          <StatCard title={t.dashboard.totalGroups} value={overview.totalGroups} icon={<GroupIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#2196f3" />
         </Grid>
         <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
-          <StatCard title={t.dashboard.totalExpenses} value={overview.totalExpenses} icon={<ReceiptIcon sx={{ color: '#fff', fontSize: { xs: 20, sm: 24 } }} />} color="#ff9800" />
+          <StatCard title={t.dashboard.totalExpenses} value={overview.totalExpenses} icon={<ReceiptIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#ff9800" />
         </Grid>
         <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
-          <StatCard title={t.dashboard.totalFeedback} value={overview.totalFeedback} icon={<FeedbackIcon sx={{ color: '#fff', fontSize: { xs: 20, sm: 24 } }} />} color="#9c27b0" />
+          <StatCard title={t.dashboard.totalFeedback} value={overview.totalFeedback} icon={<FeedbackIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#9c27b0" />
         </Grid>
       </Grid>
 
@@ -188,12 +188,12 @@ const Dashboard = () => {
 
       <Card>
         <CardHeader title={t.dashboard.recentUsers} />
-        <CardContent sx={{ px: { xs: 0, sm: 2 }, overflowX: 'auto' }}>
-          <Table size="small" sx={{ minWidth: { xs: 500, sm: 'auto' } }}>
+        <CardContent sx={{ px: { xs: 1, sm: 2 } }}>
+          <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell align="left">{t.resources.users.fields.name}</TableCell>
-                <TableCell align="left">{t.resources.users.fields.email}</TableCell>
+                {!isSmall && <TableCell align="left">{t.resources.users.fields.email}</TableCell>}
                 <TableCell align="left">{t.resources.users.fields.createdAt}</TableCell>
                 <TableCell align="right">{t.resources.users.fields.groupsCount}</TableCell>
               </TableRow>
@@ -202,7 +202,7 @@ const Dashboard = () => {
               {recentUsers.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell align="left">{user.name || '-'}</TableCell>
-                  <TableCell align="left">{user.email}</TableCell>
+                  {!isSmall && <TableCell align="left">{user.email}</TableCell>}
                   <TableCell align="left">{new Date(user.createdAt).toLocaleDateString()}</TableCell>
                   <TableCell align="right">{user.groupsCount}</TableCell>
                 </TableRow>
