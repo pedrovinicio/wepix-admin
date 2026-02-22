@@ -5,7 +5,7 @@ const userFilters = [
 ];
 
 export const UserList = () => (
-  <List filters={userFilters} sort={{ field: 'createdAt', order: 'DESC' }}>
+  <List filters={userFilters} sort={{ field: 'createdAt', order: 'DESC' }} perPage={25}>
     <Datagrid bulkActionButtons={false}>
       <TextField source="name" />
       <TextField source="email" />
