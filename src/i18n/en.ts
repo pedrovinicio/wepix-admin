@@ -18,6 +18,7 @@ const en = {
     totalFeedback: 'Total Feedback',
     usersWithPixKey: 'Users with PIX Key',
     usersWithoutGroups: 'Users without Groups',
+    groupsWithExpenses: 'Groups with Expenses',
     userGrowth: 'New Registrations',
     totalUsersOverTime: 'Total Users & Active Users',
     totalUsersLine: 'Total Users',

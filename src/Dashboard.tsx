@@ -8,6 +8,7 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import FeedbackIcon from '@mui/icons-material/Feedback';
 import PixIcon from '@mui/icons-material/Pix';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import en from './i18n/en';
 
 const t = en;
@@ -22,6 +23,7 @@ interface Overview {
   totalFeedback: number;
   usersWithPixKey: number;
   usersWithoutGroups: number;
+  groupsWithExpenses: number;
 }
 
 interface GrowthPoint {
@@ -114,19 +116,22 @@ const Dashboard = () => {
           <StatCard title={t.dashboard.activeUsers} value={overview.activeUsers} icon={<VerifiedUserIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#10B981" />
         </Grid>
         <Grid size={{ xs: 6, sm: 4, md: 3 }}>
+          <StatCard title={t.dashboard.usersWithPixKey} value={overview.usersWithPixKey} icon={<PixIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#00BCD4" />
+        </Grid>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
+          <StatCard title={t.dashboard.usersWithoutGroups} value={overview.usersWithoutGroups} icon={<PersonOffIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#ef5350" />
+        </Grid>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title={t.dashboard.totalGroups} value={overview.totalGroups} icon={<GroupIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#2196f3" />
+        </Grid>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
+          <StatCard title={t.dashboard.groupsWithExpenses} value={overview.groupsWithExpenses} icon={<AccountBalanceWalletIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#7B1FA2" />
         </Grid>
         <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title={t.dashboard.totalExpenses} value={overview.totalExpenses} icon={<ReceiptIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#ff9800" />
         </Grid>
         <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title={t.dashboard.totalFeedback} value={overview.totalFeedback} icon={<FeedbackIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#9c27b0" />
-        </Grid>
-        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
-          <StatCard title={t.dashboard.usersWithPixKey} value={overview.usersWithPixKey} icon={<PixIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#00BCD4" />
-        </Grid>
-        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
-          <StatCard title={t.dashboard.usersWithoutGroups} value={overview.usersWithoutGroups} icon={<PersonOffIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#ef5350" />
         </Grid>
       </Grid>
 

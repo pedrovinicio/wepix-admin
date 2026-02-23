@@ -18,6 +18,7 @@ const pt = {
     totalFeedback: 'Total de Feedback',
     usersWithPixKey: 'Usuários com Chave PIX',
     usersWithoutGroups: 'Usuários sem Grupos',
+    groupsWithExpenses: 'Grupos com Despesas',
     userGrowth: 'Novos Cadastros',
     totalUsersOverTime: 'Total de Usuários & Usuários Ativos',
     totalUsersLine: 'Total de Usuários',
