@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, Box, Typography, Select, MenuItem, Table, TableBody, TableCell, TableHead, TableRow, Grid, useMediaQuery, useTheme } from '@mui/material';
-import { useDataProvider } from 'react-admin';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import PeopleIcon from '@mui/icons-material/People';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import GroupIcon from '@mui/icons-material/Group';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import FeedbackIcon from '@mui/icons-material/Feedback';
+import PixIcon from '@mui/icons-material/Pix';
+import PersonOffIcon from '@mui/icons-material/PersonOff';
 import en from './i18n/en';
 
 const t = en;
@@ -19,6 +20,8 @@ interface Overview {
   totalGroups: number;
   totalExpenses: number;
   totalFeedback: number;
+  usersWithPixKey: number;
+  usersWithoutGroups: number;
 }
 
 interface GrowthPoint {
@@ -57,7 +60,6 @@ const StatCard = ({ title, value, icon, color }: { title: string; value: number;
 );
 
 const Dashboard = () => {
-  const dataProvider = useDataProvider();
   const [overview, setOverview] = useState<Overview | null>(null);
   const [growth, setGrowth] = useState<GrowthPoint[]>([]);
   const [cumulative, setCumulative] = useState<CumulativePoint[]>([]);
@@ -78,12 +80,8 @@ const Dashboard = () => {
       if (res.success) setOverview(res.data);
     });
 
-    dataProvider.getList('users', {
-      pagination: { page: 1, perPage: 10 },
-      sort: { field: 'createdAt', order: 'DESC' },
-      filter: {},
-    }).then(({ data }) => {
-      setRecentUsers(data as unknown as RecentUser[]);
+    fetchWithAuth(`${API_URL}/admin/stats/users?_sort=createdAt&_order=DESC&_start=0&_end=10`).then((data) => {
+      if (Array.isArray(data)) setRecentUsers(data);
     });
   }, []);
 
@@ -109,20 +107,26 @@ const Dashboard = () => {
       <Typography variant="h5" sx={{ mb: { xs: 2, sm: 3 }, fontWeight: 'bold', fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>{t.dashboard.title}</Typography>
 
       <Grid container spacing={{ xs: 1, sm: 2 }} sx={{ mb: { xs: 2, sm: 3 } }}>
-        <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title={t.dashboard.totalUsers} value={overview.totalUsers} icon={<PeopleIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#4caf50" />
         </Grid>
-        <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title={t.dashboard.activeUsers} value={overview.activeUsers} icon={<VerifiedUserIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#10B981" />
         </Grid>
-        <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title={t.dashboard.totalGroups} value={overview.totalGroups} icon={<GroupIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#2196f3" />
         </Grid>
-        <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title={t.dashboard.totalExpenses} value={overview.totalExpenses} icon={<ReceiptIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#ff9800" />
         </Grid>
-        <Grid size={{ xs: 6, sm: 6, md: 2.4 }}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title={t.dashboard.totalFeedback} value={overview.totalFeedback} icon={<FeedbackIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#9c27b0" />
+        </Grid>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
+          <StatCard title={t.dashboard.usersWithPixKey} value={overview.usersWithPixKey} icon={<PixIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#00BCD4" />
+        </Grid>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
+          <StatCard title={t.dashboard.usersWithoutGroups} value={overview.usersWithoutGroups} icon={<PersonOffIcon sx={{ color: '#fff', fontSize: { xs: 16, sm: 24 } }} />} color="#ef5350" />
         </Grid>
       </Grid>
 

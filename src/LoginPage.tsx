@@ -11,6 +11,11 @@ const LoginPage = () => (
         backgroundColor: '#FAFBFC',
         '& .MuiInputBase-input': {
           color: '#0F172A',
+          '&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active': {
+            WebkitBoxShadow: '0 0 0 30px #FAFBFC inset !important',
+            WebkitTextFillColor: '#0F172A !important',
+            caretColor: '#0F172A',
+          },
         },
         '& .MuiInputLabel-root': {
           color: '#64748B',

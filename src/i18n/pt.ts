@@ -16,6 +16,8 @@ const pt = {
     totalGroups: 'Total de Grupos',
     totalExpenses: 'Total de Despesas',
     totalFeedback: 'Total de Feedback',
+    usersWithPixKey: 'Usuários com Chave PIX',
+    usersWithoutGroups: 'Usuários sem Grupos',
     userGrowth: 'Novos Cadastros',
     totalUsersOverTime: 'Total de Usuários & Usuários Ativos',
     totalUsersLine: 'Total de Usuários',
