@@ -7,8 +7,8 @@ import { i18nProvider } from './i18n';
 import Dashboard from './Dashboard';
 import LoginPage from './LoginPage';
 import { theme } from './theme';
-import { UserList } from './resources/users';
-import { GroupList } from './resources/groups';
+import { UserList, UserShow } from './resources/users';
+import { GroupList, GroupShow } from './resources/groups';
 
 const App = () => (
   <Admin
@@ -20,8 +20,8 @@ const App = () => (
     theme={theme}
     basename="/"
   >
-    <Resource name="users" list={UserList} icon={PeopleIcon} />
-    <Resource name="groups" list={GroupList} icon={GroupIcon} />
+    <Resource name="users" list={UserList} show={UserShow} icon={PeopleIcon} />
+    <Resource name="groups" list={GroupList} show={GroupShow} icon={GroupIcon} />
   </Admin>
 );
 
