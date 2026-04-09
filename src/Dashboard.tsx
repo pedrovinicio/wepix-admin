@@ -45,6 +45,36 @@ interface RecentUser {
   groupsCount: number;
 }
 
+const getTodayPeriod = (periodType: string): string => {
+  const now = new Date();
+  if (periodType === 'monthly') {
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  }
+  if (periodType === 'weekly') {
+    const jan1 = new Date(now.getFullYear(), 0, 1);
+    const days = Math.floor((now.getTime() - jan1.getTime()) / 86400000);
+    const week = Math.ceil((days + jan1.getDay() + 1) / 7);
+    return `${now.getFullYear()}-${String(week).padStart(2, '0')}`;
+  }
+  return now.toISOString().split('T')[0];
+};
+
+const padGrowthToToday = (data: GrowthPoint[], periodType: string): GrowthPoint[] => {
+  if (data.length === 0) return data;
+  const today = getTodayPeriod(periodType);
+  const last = data[data.length - 1];
+  if (last.period >= today) return data;
+  return [...data, { period: today, count: 0 }];
+};
+
+const padCumulativeToToday = (data: CumulativePoint[], periodType: string): CumulativePoint[] => {
+  if (data.length === 0) return data;
+  const today = getTodayPeriod(periodType);
+  const last = data[data.length - 1];
+  if (last.period >= today) return data;
+  return [...data, { period: today, total: last.total, active: last.active }];
+};
+
 const StatCard = ({ title, value, icon, color }: { title: string; value: number; icon: React.ReactNode; color: string }) => (
   <Card sx={{ flex: 1 }}>
     <CardContent sx={{ p: { xs: 1, sm: 2 }, '&:last-child': { pb: { xs: 1, sm: 2 } } }}>
@@ -89,13 +119,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchWithAuth(`${API_URL}/admin/stats/users/growth?period=${period}`).then((res) => {
-      if (res.success) setGrowth(res.data);
+      if (res.success) setGrowth(padGrowthToToday(res.data, period));
     });
   }, [period]);
 
   useEffect(() => {
     fetchWithAuth(`${API_URL}/admin/stats/users/cumulative?period=${cumulativePeriod}`).then((res) => {
-      if (res.success) setCumulative(res.data);
+      if (res.success) setCumulative(padCumulativeToToday(res.data, cumulativePeriod));
     });
   }, [cumulativePeriod]);
 
